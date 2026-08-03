@@ -98,8 +98,13 @@ This URL is temporary. Once the domain is registered it replaces
 URLs, email image URLs, QR targets — follows automatically. **Do not print any
 QR code against the vercel.app URL**; printed codes are permanent.
 
-Redeploy with `vercel deploy --prod`. Nothing is connected to git yet, so
-deploys are manual until a GitHub remote is added.
+Source lives at https://github.com/disenyoprojects/GrowForward and is connected
+to Vercel: **pushing to `main` deploys to production**. `vercel deploy --prod`
+still works for an out-of-band deploy.
+
+Migrations do **not** run on deploy. After merging a schema change, run
+`npm run db:deploy` against the production `DATABASE_URL` yourself — otherwise
+the new code meets the old tables.
 
 - **Vercel** hosts the site. Functions run in Singapore (`vercel.json`) — the
   default US region would put the Pacific between every request and the database.
