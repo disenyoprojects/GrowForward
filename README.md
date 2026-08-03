@@ -17,6 +17,23 @@ npm run dev
 
 Open http://localhost:3000.
 
+### No database yet?
+
+You do not need Railway to develop locally. Prisma ships a local Postgres:
+
+```bash
+npx prisma dev --name growforward
+```
+
+It prints a `DATABASE_URL` and a `SHADOW_DATABASE_URL` — put both in `.env`
+(the Prisma CLI reads that file) and in `.env.local` (Next.js reads that one),
+then run `npm run db:migrate`.
+
+Checkout and email need real PayMongo and Resend keys. Without them the order is
+still created and recorded — the checkout call fails and is logged as a
+`checkout.failed` event, which is exactly what you would see in production if
+PayMongo were down.
+
 ## How the code is organised
 
 | Path | What lives there |
