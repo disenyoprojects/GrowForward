@@ -1,0 +1,50 @@
+/*
+GrowForward Email Design Tokens
+--------------------------------
+Reference stylesheet only. Email clients (especially Outlook desktop)
+do not reliably support external or <style>-block CSS, so every email
+in this system uses INLINE styles built from these same values.
+Treat this file as the single source of truth for colors, type, and
+spacing when hand-editing or extending a template.
+*/
+
+:root {
+  /* Color palette */
+  --forest: #2C3B2A;
+  --forest-deep: #1F2B1E;
+  --sage: #A9B79C;
+  --sage-light: #E4E9DC;
+  --beige: #EFE8D8;
+  --linen: #F7F3E9;
+  --off-white: #FBFAF6;
+  --earth-brown: #6B4E3A;
+  --bamboo: #C7A97B;
+  --wood: #8A6244;
+  --text-dark: #26301F;
+  --text-muted: #5A6552;
+
+  /* Typography */
+  --font-serif: Georgia, 'Times New Roman', Times, serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+
+  /* Layout */
+  --container-width: 600px;
+  --radius-card: 12px;
+  --radius-container: 16px;
+  --radius-button: 100px;
+}
+
+/*
+Component reference (see assets/components.html for rendered examples):
+  .gf-container   — 600px centered table, off-white background, 16px radius
+  .gf-pad         — standard horizontal padding (48px desktop / 24px mobile)
+  .gf-hero        — full-width hero image, 280px height desktop
+  .gf-h1          — serif headline, 32px desktop / 26px mobile
+  button          — bamboo fill, forest-deep text, 100px radius, mso fallback via VML
+  detail-table    — linen background, 12px radius, label/value rows
+  quote-block     — italic serif pull-quote in wood color
+  grower-card     — forest background card with circular photo + italic quote
+  recipe-card     — bordered card, square image left, content right
+  product-card    — linen card, image top, name/desc/CTA below
+  footer          — forest-deep background, logo, tagline, partnership line, contact, unsubscribe
+*/

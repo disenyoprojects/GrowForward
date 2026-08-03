@@ -1,0 +1,173 @@
+// GrowForward V1 — orders and fulfilment.
+//
+// Site content is NOT stored here; it lives in typed modules under `content/`.
+// This database holds only what a purchase creates: the order, its audit
+// trail, payment webhooks, email sends, and staff logins.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  PREPARING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum AdminRole {
+  ADMIN
+  STAFF
+}
+
+/// One row per purchase. Created before the customer reaches PayMongo, so a
+/// dropped redirect never loses an order.
+model Order {
+  id          String      @id @default(cuid())
+  /// Human-facing reference shown in emails, e.g. GF-2026-0001.
+  orderNumber String      @unique
+  status      OrderStatus @default(PENDING_PAYMENT)
+
+  // Buyer
+  buyerName  String
+  buyerEmail String
+  buyerPhone String?
+
+  // Gift details — personal data, treat with care.
+  recipientName String
+  senderName    String
+  giftMessage   String?
+  deliveryNotes String?
+
+  // Delivery
+  deliveryAddress    String
+  deliveryDateWanted DateTime?
+
+  // Line item. V1 sells a single collection per order, no cart.
+  collectionSlug String
+  quantity       Int    @default(1)
+  totalCentavos  Int
+  currency       String @default("PHP")
+
+  // Payment
+  paymongoCheckoutSessionId String?   @unique
+  paymongoPaymentId         String?
+  paidAt                    DateTime?
+
+  // Fulfilment
+  courierName    String?
+  trackingNumber String?
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+
+  /// Random and unguessable. Used as the QR/Guide URL — never expose the id.
+  guideToken          String    @unique
+  guideFirstScannedAt DateTime?
+  guideScanCount      Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events    OrderEvent[]
+  emailLogs EmailLog[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+/// Append-only audit trail. Status changes write a row here rather than
+/// overwriting history, so there is always a record of what happened and who
+/// did it.
+model OrderEvent {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  /// e.g. "order.created", "payment.paid", "status.shipped"
+  type String
+  /// Who triggered it: an admin email, or "system" for automated events.
+  actor   String
+  payload Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId, createdAt])
+  @@map("order_events")
+}
+
+/// Every webhook PayMongo sends. The unique external id makes retries and
+/// duplicate deliveries harmless — the second insert simply fails.
+model WebhookEvent {
+  id         String @id @default(cuid())
+  provider   String @default("paymongo")
+  externalId String @unique
+
+  eventType   String
+  raw         Json
+  receivedAt  DateTime  @default(now())
+  processedAt DateTime?
+  error       String?
+
+  @@index([processedAt])
+  @@map("webhook_events")
+}
+
+/// One row per send attempt. Written before dispatch so a retry cannot
+/// double-send a transactional email.
+model EmailLog {
+  id      String  @id @default(cuid())
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  /// Template filename without extension, e.g. "order-confirmation".
+  template  String
+  recipient String
+  resendId  String?
+  error     String?
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+
+  /// One transactional send per template per order.
+  @@unique([orderId, template])
+  @@index([createdAt])
+  @@map("email_log")
+}
+
+/// Affiliate registrations. V1 collects them only — there is no commission
+/// engine yet.
+model AffiliateApplication {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  instagram String?
+  facebook  String?
+  audience  String?
+  message   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("affiliate_applications")
+}
+
+/// Destinevents staff who can access /admin. Created by seed script only —
+/// there is no public signup.
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         AdminRole @default(STAFF)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@map("admin_users")
+}
