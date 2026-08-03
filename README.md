@@ -90,6 +90,17 @@ purchase depends on the browser coming back.
 
 ## Deployment
 
+**Live:** https://growforward-chi.vercel.app — Vercel project
+`disenyo-projects/growforward`, Railway project `growforward`.
+
+This URL is temporary. Once the domain is registered it replaces
+`NEXT_PUBLIC_SITE_URL`, and everything derived from it — PayMongo redirect
+URLs, email image URLs, QR targets — follows automatically. **Do not print any
+QR code against the vercel.app URL**; printed codes are permanent.
+
+Redeploy with `vercel deploy --prod`. Nothing is connected to git yet, so
+deploys are manual until a GitHub remote is added.
+
 - **Vercel** hosts the site. Functions run in Singapore (`vercel.json`) — the
   default US region would put the Pacific between every request and the database.
 - **Railway** hosts Postgres. Vercel must reach it over the **public TCP
@@ -102,7 +113,10 @@ purchase depends on the browser coming back.
   `connection_limit=1` each serverless instance opens its own pool and exhausts
   Postgres. See [.env.example](.env.example).
 - Use a **separate Railway database for preview deploys** so branch builds never
-  touch real orders.
+  touch real orders. Not set up yet — production is currently the only database.
+- **Confirm the Railway service region is Singapore** in the dashboard. Railway
+  defaults to US West, which would put the Pacific between every query and the
+  Vercel function that made it.
 - PayMongo cannot reach a preview URL that has deployment protection on. Use a
   stable staging alias with a protection bypass token for webhook testing.
 
