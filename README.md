@@ -92,9 +92,15 @@ purchase depends on the browser coming back.
 
 - **Vercel** hosts the site. Functions run in Singapore (`vercel.json`) — the
   default US region would put the Pacific between every request and the database.
-- **Railway** hosts Postgres, also in Singapore. Use the public connection
-  string with `sslmode=require&connection_limit=1`; Vercel and Railway cannot
-  share a private network, and each serverless instance opens its own pool.
+- **Railway** hosts Postgres. Vercel must reach it over the **public TCP
+  proxy** (`railway tcp-proxy create --port 5432 --service Postgres`) — the two
+  platforms cannot share a private network, so `postgres.railway.internal` does
+  not resolve from Vercel.
+- The `DATABASE_URL` needs `uselibpqcompat=true&sslmode=require&connection_limit=1`.
+  Without `uselibpqcompat=true` the `pg` driver treats `require` as
+  `verify-full` and rejects Railway's self-signed proxy certificate; without
+  `connection_limit=1` each serverless instance opens its own pool and exhausts
+  Postgres. See [.env.example](.env.example).
 - Use a **separate Railway database for preview deploys** so branch builds never
   touch real orders.
 - PayMongo cannot reach a preview URL that has deployment protection on. Use a
