@@ -119,12 +119,11 @@ the new code meets the old tables.
   Postgres. See [.env.example](.env.example).
 - Use a **separate Railway database for preview deploys** so branch builds never
   touch real orders. Not set up yet — production is currently the only database.
-- ⚠️ **The Railway Postgres is in the wrong region.** It sits in `us-west`
-  (`sfo`) — Railway's default — while the Vercel functions run in Singapore, so
-  every query crosses the Pacific twice. Fix it with
-  `railway service scale --service Postgres southeast-asia=1 us-west=0`. Do this
-  **before the first real order**: the database is trivial to move while it is
-  empty, and painful once it is not.
+- **Postgres runs in Southeast Asia**, alongside the Vercel functions. It was
+  created in Railway's `us-west` default, which put the Pacific between every
+  query and the function that made it — a single-query lookup measured ~350ms
+  warm, against ~170ms after the move. Keep any new database in
+  `southeast-asia`; the setting is under the service's Settings → Scale.
 - PayMongo cannot reach a preview URL that has deployment protection on. Use a
   stable staging alias with a protection bypass token for webhook testing.
 
