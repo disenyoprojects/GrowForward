@@ -132,8 +132,24 @@ the new code meets the old tables.
 Tracked in the build plan.
 
 - **Guide content** — the page is built; the words are not. See below.
-- Affiliate landing page and registration form
 - Legal pages: privacy, terms, refunds
+- The pages the nav already links to but that do not exist yet: `/collections`
+  (the index, not the detail pages), `/corporate`, `/about`, `/contact`, `/faq`
+
+### Affiliate
+
+`/affiliate` — benefits, commission overview, FAQ, and an application form that
+writes to `affiliate_applications`. Frontend only, as scoped: no tracking, no
+referral links, no payout engine. Those belong to the separate affiliate
+platform, which integrates against this table later.
+
+**Every commission rate is `null` and renders "To be confirmed."** A rate is a
+promise about money; a made-up one would be a promise the business never made.
+Set `ratePercent` in [content/affiliate.ts](content/affiliate.ts) once the
+figures are signed off — same for the payout-method and sample-basket answers in
+the FAQ.
+
+Applications are read by a human. Nothing emails them yet.
 
 ### The Guide
 
