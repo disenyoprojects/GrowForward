@@ -13,6 +13,58 @@ export interface CollectionImage {
   readonly alt: string
 }
 
+/**
+ * A guide is only shown to recipients once it is `published`. Until then the
+ * Guide page falls back to the teaser, so a basket can ship before its content
+ * is finished without anyone reading half-written text.
+ */
+export type GuideStatus = 'draft' | 'published'
+
+export interface PlantCare {
+  readonly name: string
+  readonly light: string
+  readonly water: string
+  readonly feed: string
+  readonly note?: string
+}
+
+export interface GuideRecipe {
+  readonly title: string
+  /** Which plants from the basket this recipe uses. */
+  readonly uses: readonly string[]
+  readonly ingredients: readonly string[]
+  readonly steps: readonly string[]
+}
+
+export interface GrowerStory {
+  readonly name: string
+  readonly farm: string
+  readonly location: string
+  readonly story: string
+}
+
+export interface GrowingTip {
+  readonly title: string
+  readonly body: string
+}
+
+export interface SharePrompt {
+  readonly heading: string
+  readonly body: string
+  readonly hashtag: string
+}
+
+export interface CollectionGuide {
+  readonly collectionSlug: string
+  readonly status: GuideStatus
+  readonly intro: string
+  readonly plants: readonly PlantCare[]
+  readonly recipes: readonly GuideRecipe[]
+  readonly growers: readonly GrowerStory[]
+  readonly tips: readonly GrowingTip[]
+  readonly share: SharePrompt
+}
+
 export interface Collection {
   readonly slug: string
   readonly name: string

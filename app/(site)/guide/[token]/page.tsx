@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
-import { getHomepage } from '@/lib/content'
+import { GuideContent } from '@/components/guide/GuideContent'
+import { getHomepage, getPublishedGuide } from '@/lib/content'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,10 +19,13 @@ export const metadata: Metadata = {
 
 export default async function GuidePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ token: string }>
+  searchParams: Promise<{ preview?: string }>
 }) {
   const { token } = await params
+  const { preview } = await searchParams
 
   const order = await db.order.findUnique({
     where: { guideToken: token },
@@ -31,6 +35,7 @@ export default async function GuidePage({
       senderName: true,
       giftMessage: true,
       guideFirstScannedAt: true,
+      collectionSlug: true,
     },
   })
 
@@ -54,11 +59,20 @@ export default async function GuidePage({
     console.error(`Could not record guide scan for order ${order.id}:`, error)
   }
 
+  const isPreview = preview === '1'
+  const guide = getPublishedGuide(order.collectionSlug, isPreview)
   const { guideTeaser } = getHomepage()
 
   return (
     <section className="guide">
       <div className="container">
+        {isPreview && guide?.status === 'draft' ? (
+          <p className="guide-draft-banner" role="status">
+            Draft preview — this content has not been signed off and is not shown
+            to recipients.
+          </p>
+        ) : null}
+
         <span className="eyebrow">The GrowForward Guide</span>
         <h2>Hello, {order.recipientName}</h2>
 
@@ -71,19 +85,27 @@ export default async function GuidePage({
           <p className="desc">A living gift from {order.senderName}.</p>
         )}
 
-        <p className="desc">{guideTeaser.description}</p>
+        {guide ? (
+          <GuideContent guide={guide} />
+        ) : (
+          <>
+            {/* No finished guide for this collection yet — the teaser is what
+                ships in the meantime, rather than half-written content. */}
+            <p className="desc">{guideTeaser.description}</p>
 
-        <div className="guide-grid">
-          {guideTeaser.cards.map((card) => (
-            <div className="guide-card" key={card.title}>
-              <span className="icon" aria-hidden="true">
-                {card.icon}
-              </span>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
+            <div className="guide-grid">
+              {guideTeaser.cards.map((card) => (
+                <div className="guide-card" key={card.title}>
+                  <span className="icon" aria-hidden="true">
+                    {card.icon}
+                  </span>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </section>
   )

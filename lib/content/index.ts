@@ -6,9 +6,15 @@
  */
 
 import { collections } from '@/content/collections'
+import { guides } from '@/content/guide'
 import { homepage } from '@/content/homepage'
 import { site } from '@/content/site'
-import type { Collection, HomepageContent, SiteContent } from './types'
+import type {
+  Collection,
+  CollectionGuide,
+  HomepageContent,
+  SiteContent,
+} from './types'
 
 export function getSite(): SiteContent {
   return site
@@ -40,6 +46,31 @@ export function getCollectionBySlug(slug: string): Collection | null {
  */
 export function getFeaturedCollection(): Collection | null {
   return getLiveCollections()[0] ?? null
+}
+
+export function getGuideByCollection(slug: string): CollectionGuide | null {
+  return guides.find((guide) => guide.collectionSlug === slug) ?? null
+}
+
+/**
+ * The guide to actually render for a recipient.
+ *
+ * Returns `null` while the guide is still a draft, so the page can fall back to
+ * the teaser rather than showing someone `[GROWER NAME]` on the basket they were
+ * just given. `preview` overrides that — it is how staff read a draft before
+ * signing it off, and a recipient scanning a QR never has it set.
+ */
+export function getPublishedGuide(
+  slug: string,
+  preview = false,
+): CollectionGuide | null {
+  const guide = getGuideByCollection(slug)
+
+  if (!guide) {
+    return null
+  }
+
+  return guide.status === 'published' || preview ? guide : null
 }
 
 export * from './types'
