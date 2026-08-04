@@ -131,9 +131,30 @@ the new code meets the old tables.
 
 Tracked in the build plan.
 
-- The full Guide content — plant care, recipes, grower stories, tips
+- **Guide content** — the page is built; the words are not. See below.
 - Affiliate landing page and registration form
 - Legal pages: privacy, terms, refunds
+
+### The Guide
+
+`/guide/<guideToken>` is what the basket QR opens. It is built in full — plant
+care, recipes, grower stories, growing tips, share prompt — but the content in
+[content/guide.ts](content/guide.ts) is still `status: 'draft'`.
+
+**A draft is never shown to a recipient.** The page falls back to the teaser, so
+a basket can ship before its guide is written without anyone reading
+`[GROWER NAME]` off the gift they were just handed. To read a draft, add
+`?preview=1` to the guide URL — a recipient scanning a QR never has it set.
+
+Publishing is one field: change `status` to `'published'`. A test fails if a
+published guide still contains a bracketed placeholder, so the switch cannot be
+flipped early by accident.
+
+Still needed from the business, and deliberately not invented:
+
+- Sign-off on the plant care text from someone who actually grows these
+- Recipes matching the printed Luxury Recipe Card
+- Grower stories — real farms, real names, real permission
 
 ### Admin
 
