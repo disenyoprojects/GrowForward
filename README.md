@@ -131,12 +131,25 @@ the new code meets the old tables.
 
 Tracked in the build plan.
 
-- Admin screen: staff login, order list, status changes, tracking numbers —
-  this is also what would give ops a way to *reach* the QR codes below
-- Shipping / preparing / delivered emails (the send layer exists; the triggers do not)
 - The full Guide content — plant care, recipes, grower stories, tips
 - Affiliate landing page and registration form
 - Legal pages: privacy, terms, refunds
+
+### Admin
+
+`/admin` — staff sign in, see every order, open one, move it along, and reach
+its basket QR. Status changes write an `OrderEvent` and trigger the
+preparing / shipping / delivered email.
+
+There is no signup. Accounts exist only because someone ran:
+
+```bash
+npm run admin:create -- --email you@destinevents.biz --name "Your Name" --role ADMIN
+```
+
+`ADMIN_SESSION_SECRET` must be set wherever the app runs — including Vercel, or
+staff cannot sign in on the live site. Rotating it signs everyone out; that is
+the revocation lever, since sessions are stateless and there is no session table.
 
 ### QR codes
 
