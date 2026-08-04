@@ -1,8 +1,11 @@
 import { randomBytes } from 'node:crypto'
 
 /** Characters used for guide tokens: no vowels (avoids real words), no 0/O/1/I. */
-const TOKEN_ALPHABET = '23456789BCDFGHJKLMNPQRSTVWXZ'
-const TOKEN_LENGTH = 22
+export const GUIDE_TOKEN_ALPHABET = '23456789BCDFGHJKLMNPQRSTVWXZ'
+export const GUIDE_TOKEN_LENGTH = 22
+
+const TOKEN_ALPHABET = GUIDE_TOKEN_ALPHABET
+const TOKEN_LENGTH = GUIDE_TOKEN_LENGTH
 
 /**
  * Generates the token that becomes the Guide URL printed on the basket's QR

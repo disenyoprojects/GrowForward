@@ -119,22 +119,38 @@ the new code meets the old tables.
   Postgres. See [.env.example](.env.example).
 - Use a **separate Railway database for preview deploys** so branch builds never
   touch real orders. Not set up yet — production is currently the only database.
-- **Confirm the Railway service region is Singapore** in the dashboard. Railway
-  defaults to US West, which would put the Pacific between every query and the
-  Vercel function that made it.
+- ⚠️ **The Railway Postgres is in the wrong region.** It sits in `us-west`
+  (`sfo`) — Railway's default — while the Vercel functions run in Singapore, so
+  every query crosses the Pacific twice. Fix it with
+  `railway service scale --service Postgres southeast-asia=1 us-west=0`. Do this
+  **before the first real order**: the database is trivial to move while it is
+  empty, and painful once it is not.
 - PayMongo cannot reach a preview URL that has deployment protection on. Use a
   stable staging alias with a protection bypass token for webhook testing.
 
 ## Still to build
 
-Tracked in the build plan; nothing below is started.
+Tracked in the build plan.
 
-- Admin screen: staff login, order list, status changes, tracking numbers
+- Admin screen: staff login, order list, status changes, tracking numbers —
+  this is also what would give ops a way to *reach* the QR codes below
 - Shipping / preparing / delivered emails (the send layer exists; the triggers do not)
 - The full Guide content — plant care, recipes, grower stories, tips
-- QR code generation (blocked: how tags get onto baskets is a Session Groceries decision)
 - Affiliate landing page and registration form
 - Legal pages: privacy, terms, refunds
+
+### QR codes
+
+Rendering is done — [lib/orders/qr.ts](lib/orders/qr.ts), served from
+`/api/orders/<guideToken>/qr` as SVG (default) or `?format=png`. Codes are
+generated on demand from the order's `guideToken` rather than pre-generated in a
+batch, because the guide they open is personalised: a code has to be tied to a
+specific order, so it cannot exist before the order does.
+
+Two things are still open, and both are Session Groceries' call: how a tag
+physically gets onto a basket, and who prints it. **Nothing should be printed
+yet** — the codes currently encode the `vercel.app` URL, and a printed code is
+permanent. See the deployment note above.
 
 ## Known gaps
 
