@@ -1100,3 +1100,251 @@ footer a:hover {
     padding-top: 10px;
   }
 }
+
+/* AFFILIATE ------------------------------------------------------------------
+   Reuses .gf-field and .gf-error from the personalize form, so both forms read
+   as the same product. Only the page's own sections are styled here. */
+
+.gf-optional {
+  color: var(--sage);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.affiliate-hero {
+  padding: 120px 0 80px;
+  background: var(--forest-deep);
+  color: var(--off-white);
+  text-align: center;
+}
+
+.affiliate-hero .eyebrow {
+  color: var(--bamboo);
+}
+
+.affiliate-hero h1 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 52px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin: 12px 0 20px;
+  text-wrap: balance;
+}
+
+.affiliate-hero .desc {
+  color: var(--sage-light);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.affiliate-benefits,
+.affiliate-commission,
+.affiliate-faqs,
+.affiliate-apply {
+  padding: 88px 0;
+}
+
+.affiliate-benefits {
+  background: var(--linen);
+}
+
+.affiliate-commission {
+  background: var(--off-white);
+}
+
+.affiliate-faqs {
+  background: var(--linen);
+}
+
+.affiliate-benefits h2,
+.affiliate-commission h2,
+.affiliate-faqs h2,
+.affiliate-apply h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 36px;
+  text-align: center;
+}
+
+.affiliate-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.affiliate-benefit {
+  background: var(--off-white);
+  border: 1px solid rgba(44, 59, 42, 0.12);
+  border-radius: 14px;
+  padding: 26px 24px;
+}
+
+.affiliate-benefits .affiliate-benefit {
+  background: #fff;
+}
+
+.affiliate-benefit h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.affiliate-benefit p {
+  margin: 0;
+  color: var(--earth-brown);
+  font-size: 14.5px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.affiliate-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
+}
+
+.affiliate-tier {
+  border: 1px solid rgba(44, 59, 42, 0.14);
+  border-radius: 14px;
+  padding: 26px 24px;
+  text-align: center;
+}
+
+.affiliate-tier h3 {
+  font-size: 12px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--earth-brown);
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.affiliate-rate {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 30px;
+  color: var(--forest);
+  margin: 0 0 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.affiliate-requirement {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--earth-brown);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.affiliate-note {
+  margin: 28px auto 0;
+  max-width: 520px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--earth-brown);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.affiliate-faq-list {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.affiliate-faq {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(44, 59, 42, 0.12);
+}
+
+.affiliate-faq:last-child {
+  border-bottom: 0;
+}
+
+.affiliate-faq dt {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 20px;
+  color: var(--forest);
+  margin-bottom: 8px;
+}
+
+.affiliate-faq dd {
+  margin: 0;
+  color: var(--earth-brown);
+  font-size: 14.5px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.affiliate-apply .desc {
+  text-align: center;
+  max-width: 480px;
+  margin: -20px auto 36px;
+  color: var(--earth-brown);
+  font-weight: 300;
+  font-size: 15px;
+}
+
+.affiliate-form {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.affiliate-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.affiliate-success {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 36px 28px;
+  border: 1px solid var(--bamboo);
+  border-radius: 14px;
+  background: rgba(199, 169, 123, 0.1);
+}
+
+.affiliate-success h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.affiliate-success p {
+  margin: 0;
+  color: var(--earth-brown);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .affiliate-hero {
+    padding: 80px 0 56px;
+  }
+
+  .affiliate-hero h1 {
+    font-size: 34px;
+  }
+
+  .affiliate-benefits,
+  .affiliate-commission,
+  .affiliate-faqs,
+  .affiliate-apply {
+    padding: 56px 0;
+  }
+
+  .affiliate-row {
+    grid-template-columns: 1fr;
+  }
+}

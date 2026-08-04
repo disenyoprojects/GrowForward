@@ -13,6 +13,43 @@ export interface CollectionImage {
   readonly alt: string
 }
 
+export interface AffiliateBenefit {
+  readonly title: string
+  readonly body: string
+}
+
+export interface CommissionTier {
+  readonly name: string
+  readonly requirement: string
+  /** `null` until the business signs the rate off — never render a guess. */
+  readonly ratePercent: number | null
+}
+
+export interface Faq {
+  readonly question: string
+  readonly answer: string
+}
+
+export interface AffiliateContent {
+  readonly hero: {
+    readonly eyebrow: string
+    readonly heading: string
+    readonly body: string
+  }
+  readonly benefits: readonly AffiliateBenefit[]
+  readonly commission: {
+    readonly tiers: readonly CommissionTier[]
+    readonly note: string
+  }
+  readonly faqs: readonly Faq[]
+  readonly form: {
+    readonly heading: string
+    readonly body: string
+    readonly successHeading: string
+    readonly successBody: string
+  }
+}
+
 /**
  * A guide is only shown to recipients once it is `published`. Until then the
  * Guide page falls back to the teaser, so a basket can ship before its content

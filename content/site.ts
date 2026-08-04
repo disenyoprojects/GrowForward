@@ -34,6 +34,7 @@ export const site: SiteContent = {
       heading: 'Company',
       links: [
         { label: 'About', href: '/about' },
+        { label: 'Partner with us', href: '/affiliate' },
         { label: 'Contact', href: '/contact' },
         { label: 'FAQ', href: '/faq' },
       ],

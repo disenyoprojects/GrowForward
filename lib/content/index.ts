@@ -5,11 +5,13 @@
  * directly. When a CMS replaces the local modules, only this file changes.
  */
 
+import { affiliate } from '@/content/affiliate'
 import { collections } from '@/content/collections'
 import { guides } from '@/content/guide'
 import { homepage } from '@/content/homepage'
 import { site } from '@/content/site'
 import type {
+  AffiliateContent,
   Collection,
   CollectionGuide,
   HomepageContent,
@@ -46,6 +48,10 @@ export function getCollectionBySlug(slug: string): Collection | null {
  */
 export function getFeaturedCollection(): Collection | null {
   return getLiveCollections()[0] ?? null
+}
+
+export function getAffiliate(): AffiliateContent {
+  return affiliate
 }
 
 export function getGuideByCollection(slug: string): CollectionGuide | null {
