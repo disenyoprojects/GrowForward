@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
-import { Footer } from '@/components/site/Footer'
-import { Header } from '@/components/site/Header'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -32,11 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

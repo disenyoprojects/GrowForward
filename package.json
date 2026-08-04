@@ -12,6 +12,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "build:emails": "node scripts/build-email-templates.mjs",
+    "admin:create": "tsx scripts/create-admin.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -38,6 +39,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "prisma": "^7.9.1",
+    "tsx": "^4.23.5",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }
