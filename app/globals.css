@@ -123,6 +123,105 @@ nav {
   letter-spacing: 0.03em;
 }
 
+/* Mobile menu ----------------------------------------------------------------
+   The desktop row of links needs about 775px. Below that it overflowed and was
+   clipped by `overflow-x: hidden` on the body, so the last links and the Shop
+   Collection button were unreachable on a phone rather than merely off-screen.
+   Both the toggle and the panel are hidden above the breakpoint, so desktop is
+   untouched. */
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /* 44px is the smallest comfortable touch target. */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--forest);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+/* Bars fold into a cross. 7px is the gap plus one bar height. */
+.nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-nav {
+  display: none;
+  /* Positioned against the sticky header, so it hangs below the bar at full
+     width rather than inside the centred nav. */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--off-white);
+  border-bottom: 1px solid rgba(44, 59, 42, 0.1);
+  box-shadow: 0 20px 40px rgba(44, 59, 42, 0.14);
+  max-height: 78vh;
+  overflow-y: auto;
+}
+
+.mobile-nav.is-open {
+  display: block;
+}
+
+.mobile-nav-inner {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 32px 28px;
+}
+
+.mobile-nav-inner a {
+  padding: 15px 0;
+  font-size: 16px;
+  color: var(--forest);
+  border-bottom: 1px solid rgba(44, 59, 42, 0.08);
+}
+
+.mobile-nav-cta {
+  margin-top: 22px;
+  text-align: center;
+  border-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle-bar {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+}
+
 /* HERO */
 .hero {
   position: relative;

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getSite } from '@/lib/content'
 import { Logo } from './Logo'
+import { MobileNav } from './MobileNav'
 
 export function Header() {
   const { navLinks, navCta } = getSite()
@@ -21,6 +22,7 @@ export function Header() {
         <Link href={navCta.href} className="nav-cta">
           {navCta.label}
         </Link>
+        <MobileNav links={navLinks} cta={navCta} />
       </nav>
     </header>
   )

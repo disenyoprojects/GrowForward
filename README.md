@@ -161,6 +161,23 @@ Anything genuinely unknown is bracketed rather than guessed: delivery coverage,
 lead times, refund policy, corporate pricing, phone number. `/faq` answers about
 how the product works are real, because that part is built.
 
+### The menu on phones
+
+The desktop row of nav links needs about 775px. Below that it overflowed the
+viewport and was clipped by `overflow-x: hidden` on the body — so "How It
+Works", "Guide", "About" and the Shop Collection button were not merely
+off-screen, they were unreachable.
+
+Under 900px the row and the CTA are hidden and
+[components/site/MobileNav.tsx](components/site/MobileNav.tsx) shows a toggle
+that opens the same links stacked. It closes on Escape, on navigating, and on a
+tap anywhere inside it, and it locks the page behind while open. Above 900px
+both the toggle and the panel are `display: none`, so desktop is untouched.
+
+The desktop row is still rendered and hidden by CSS rather than swapped out.
+`display: none` also removes it from the accessibility tree, so a screen reader
+is never offered both copies.
+
 ### Affiliate
 
 `/affiliate` — benefits, commission overview, FAQ, and an application form that
