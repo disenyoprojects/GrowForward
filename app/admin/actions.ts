@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import {
   clearSessionCookie,
+  describeActor,
   login,
   requireAdminSession,
   setSessionCookie,
@@ -96,7 +97,7 @@ export async function updateOrderStatus(
   }
 
   try {
-    await transitionOrder(parsed.data, session.userId)
+    await transitionOrder(parsed.data, await describeActor(session.userId))
   } catch (error) {
     if (error instanceof OrderStatusError) {
       return { error: error.message }

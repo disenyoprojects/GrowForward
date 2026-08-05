@@ -72,6 +72,23 @@ export async function login(
   }
 }
 
+/**
+ * How a staff member should appear in an order's history.
+ *
+ * The session only carries an id, which reads as gibberish in an audit trail —
+ * "who marked this shipped" should answer with a person. Falls back to the id if
+ * the account has since been deleted, so the trail never loses its actor
+ * entirely.
+ */
+export async function describeActor(userId: string): Promise<string> {
+  const user = await db.adminUser.findUnique({
+    where: { id: userId },
+    select: { email: true },
+  })
+
+  return user?.email ?? userId
+}
+
 /** Writes the session cookie. `httpOnly` keeps it away from any script on the page. */
 export async function setSessionCookie(token: string): Promise<void> {
   const store = await cookies()
