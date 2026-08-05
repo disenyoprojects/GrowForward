@@ -37,8 +37,16 @@ const PARALLELISM = 1
 const KEY_LENGTH = 64
 const SALT_LENGTH = 16
 
-/** Long enough that scrypt's work factor is doing the defending, not luck. */
-const MIN_PASSWORD_LENGTH = 12
+/**
+ * Set to 6 at the founder's request.
+ *
+ * This is short enough to be guessable by an automated attacker, and the login
+ * route has no rate limiting yet — so nothing currently slows down repeated
+ * attempts. scrypt's work factor makes each guess expensive, which helps, but it
+ * is not a substitute for a limit on attempts. Raise this, or add rate limiting,
+ * before the admin holds real customer data.
+ */
+export const MIN_PASSWORD_LENGTH = 6
 
 /** `scrypt$N$r$p$salt$key`, so the parameters travel with the hash and can be raised later. */
 const FIELD_COUNT = 6

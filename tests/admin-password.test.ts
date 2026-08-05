@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { hashPassword, verifyPassword } from '@/lib/admin/password'
+import {
+  MIN_PASSWORD_LENGTH,
+  hashPassword,
+  verifyPassword,
+} from '@/lib/admin/password'
 
 describe('hashPassword', () => {
   it('produces a verifiable hash', async () => {
@@ -27,8 +31,16 @@ describe('hashPassword', () => {
     await expect(verifyPassword('same password', b)).resolves.toBe(true)
   })
 
-  it('rejects a password too short to be worth hashing', async () => {
-    await expect(hashPassword('short')).rejects.toThrow()
+  it('rejects a password shorter than the minimum', async () => {
+    await expect(hashPassword('a'.repeat(MIN_PASSWORD_LENGTH - 1))).rejects.toThrow()
+  })
+
+  it('accepts a password exactly at the minimum', async () => {
+    const hash = await hashPassword('a'.repeat(MIN_PASSWORD_LENGTH))
+
+    await expect(
+      verifyPassword('a'.repeat(MIN_PASSWORD_LENGTH), hash),
+    ).resolves.toBe(true)
   })
 })
 

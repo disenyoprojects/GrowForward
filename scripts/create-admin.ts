@@ -15,7 +15,7 @@ import 'dotenv/config'
 import { createInterface } from 'node:readline/promises'
 import { stdin, stdout } from 'node:process'
 import { db } from '../lib/db'
-import { hashPassword } from '../lib/admin/password'
+import { MIN_PASSWORD_LENGTH, hashPassword } from '../lib/admin/password'
 import type { AdminRole } from '../lib/generated/prisma/client'
 
 interface Args {
@@ -75,7 +75,9 @@ async function readPassword(): Promise<string> {
   const rl = createInterface({ input: stdin, output: stdout })
 
   try {
-    const password = await rl.question('Password (min 12 characters): ')
+    const password = await rl.question(
+      `Password (min ${MIN_PASSWORD_LENGTH} characters): `,
+    )
     const again = await rl.question('Confirm password: ')
 
     if (password !== again) {
