@@ -1348,3 +1348,362 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* STANDING PAGES --------------------------------------------------------------
+   Shared by /collections, /about, /corporate, /contact and /faq. Deliberately
+   generic rather than per-page, so a sixth page needs no new CSS. Follows the
+   affiliate page's rhythm: dark forest hero, then linen and off-white bands. */
+
+.draft-notice {
+  background: var(--bamboo);
+  color: var(--forest-deep);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 12px 0;
+  text-align: center;
+  font-weight: 300;
+}
+
+.draft-notice strong {
+  font-weight: 600;
+}
+
+.page-hero {
+  padding: 120px 0 80px;
+  background: var(--forest-deep);
+  color: var(--off-white);
+  text-align: center;
+}
+
+.page-hero .eyebrow {
+  color: var(--bamboo);
+}
+
+.page-hero h1 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 52px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin: 12px 0 20px;
+  text-wrap: balance;
+}
+
+.page-hero .desc {
+  color: var(--sage-light);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.page-body {
+  padding: 88px 0;
+  background: var(--off-white);
+}
+
+.page-body-alt {
+  background: var(--linen);
+}
+
+.page-heading {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 36px;
+  text-align: center;
+}
+
+.page-prose {
+  max-width: 680px;
+}
+
+.page-section {
+  margin-bottom: 44px;
+}
+
+.page-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.page-section h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 16px;
+}
+
+.page-section p {
+  margin: 0 0 16px;
+  color: var(--earth-brown);
+  font-size: 15.5px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.page-section p:last-child {
+  margin-bottom: 0;
+}
+
+.page-closing {
+  margin: 44px 0 0;
+  padding-top: 28px;
+  border-top: 1px solid rgba(44, 59, 42, 0.12);
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--forest);
+  text-align: center;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.page-card {
+  background: #fff;
+  border: 1px solid rgba(44, 59, 42, 0.12);
+  border-radius: 14px;
+  padding: 26px 24px;
+}
+
+.page-card h3 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.page-card p {
+  margin: 0;
+  color: var(--earth-brown);
+  font-size: 14.5px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.page-cta {
+  padding: 88px 0;
+  background: var(--forest-deep);
+  color: var(--off-white);
+  text-align: center;
+}
+
+.page-cta h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+
+.page-cta p {
+  color: var(--sage-light);
+  font-weight: 300;
+  font-size: 15.5px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 30px;
+}
+
+/* Collections index ---------------------------------------------------------- */
+
+.collection-index {
+  padding: 88px 0;
+  background: var(--linen);
+}
+
+.collection-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(44, 59, 42, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(44, 59, 42, 0.14);
+}
+
+.collection-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--sage-light);
+}
+
+.collection-card-media img {
+  object-fit: cover;
+}
+
+.collection-card-body {
+  padding: 28px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.collection-card-body .eyebrow {
+  color: var(--earth-brown);
+  opacity: 1;
+  margin-bottom: 12px;
+}
+
+.collection-card-body h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 12px;
+}
+
+.collection-card-body p {
+  margin: 0 0 20px;
+  color: var(--earth-brown);
+  font-size: 14.5px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.collection-card-price {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 26px;
+  color: var(--forest);
+  margin: auto 0 16px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.collection-card-cta {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--wood);
+}
+
+/* Contact -------------------------------------------------------------------- */
+
+.contact-channels {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.contact-channel {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(44, 59, 42, 0.12);
+}
+
+.contact-channel:last-child {
+  border-bottom: 0;
+}
+
+.contact-channel dt {
+  font-size: 12px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--earth-brown);
+  font-weight: 600;
+  padding-top: 3px;
+}
+
+.contact-channel dd {
+  margin: 0;
+  color: var(--text-body);
+  font-size: 15.5px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.contact-channel dd a {
+  color: var(--wood);
+  border-bottom: 1px solid rgba(138, 98, 68, 0.4);
+}
+
+.contact-channel dd a:hover {
+  border-bottom-color: var(--wood);
+}
+
+/* FAQ ------------------------------------------------------------------------ */
+
+.faq-groups {
+  max-width: 680px;
+}
+
+.faq-group {
+  margin-bottom: 52px;
+}
+
+.faq-group:last-child {
+  margin-bottom: 0;
+}
+
+.faq-group h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 20px;
+}
+
+.faq-item {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(44, 59, 42, 0.12);
+}
+
+.faq-item:last-child {
+  border-bottom: 0;
+}
+
+.faq-item dt {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 20px;
+  color: var(--forest);
+  margin-bottom: 8px;
+}
+
+.faq-item dd {
+  margin: 0;
+  color: var(--earth-brown);
+  font-size: 14.5px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+@media (max-width: 640px) {
+  .page-hero {
+    padding: 80px 0 56px;
+  }
+
+  .page-hero h1 {
+    font-size: 34px;
+  }
+
+  .page-body,
+  .page-cta,
+  .collection-index {
+    padding: 56px 0;
+  }
+
+  .contact-channel {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

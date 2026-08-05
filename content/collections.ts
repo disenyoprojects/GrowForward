@@ -1,4 +1,14 @@
-import type { Collection } from '@/lib/content/types'
+import type { Collection, PageHero } from '@/lib/content/types'
+
+/**
+ * Copy for the collections index. Nothing here is unconfirmed — it describes
+ * what the collections already are, so the page ships as finished.
+ */
+export const collectionsIndex: PageHero = {
+  eyebrow: 'Our Collections',
+  heading: 'Living gifts, ready to grow',
+  body: 'Each collection pairs living plants from local growers with pantry essentials and a GrowForward Guide. Choose one, personalize it, and we deliver it.',
+}
 
 /**
  * Gift collections.

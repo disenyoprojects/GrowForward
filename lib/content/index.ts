@@ -5,16 +5,25 @@
  * directly. When a CMS replaces the local modules, only this file changes.
  */
 
+import { about } from '@/content/about'
 import { affiliate } from '@/content/affiliate'
-import { collections } from '@/content/collections'
+import { collections, collectionsIndex } from '@/content/collections'
+import { contact } from '@/content/contact'
+import { corporate } from '@/content/corporate'
+import { faqs } from '@/content/faqs'
 import { guides } from '@/content/guide'
 import { homepage } from '@/content/homepage'
 import { site } from '@/content/site'
 import type {
+  AboutContent,
   AffiliateContent,
   Collection,
   CollectionGuide,
+  ContactContent,
+  CorporateContent,
+  FaqContent,
   HomepageContent,
+  PageHero,
   SiteContent,
 } from './types'
 
@@ -50,8 +59,28 @@ export function getFeaturedCollection(): Collection | null {
   return getLiveCollections()[0] ?? null
 }
 
+export function getCollectionsIndex(): PageHero {
+  return collectionsIndex
+}
+
 export function getAffiliate(): AffiliateContent {
   return affiliate
+}
+
+export function getAbout(): AboutContent {
+  return about
+}
+
+export function getCorporate(): CorporateContent {
+  return corporate
+}
+
+export function getContact(): ContactContent {
+  return contact
+}
+
+export function getFaqs(): FaqContent {
+  return faqs
 }
 
 export function getGuideByCollection(slug: string): CollectionGuide | null {

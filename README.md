@@ -132,9 +132,34 @@ the new code meets the old tables.
 Tracked in the build plan.
 
 - **Guide content** — the page is built; the words are not. See below.
+- **Copy for `/about`, `/corporate`, `/contact`, `/faq`** — the pages are built
+  and live, but are marked draft. See below.
 - Legal pages: privacy, terms, refunds
-- The pages the nav already links to but that do not exist yet: `/collections`
-  (the index, not the detail pages), `/corporate`, `/about`, `/contact`, `/faq`
+
+### Standing pages
+
+`/collections`, `/about`, `/corporate`, `/contact` and `/faq`. Until these
+existed, the header, the footer and both homepage "Shop Collection" buttons
+pointed at `/collections` and hit a 404 — the main call to action on the site
+led nowhere. [tests/site-links.test.ts](tests/site-links.test.ts) now walks the
+`app/` directory and fails if any nav, footer or homepage link has no page
+behind it.
+
+`/collections` is finished. The other four are `status: 'draft'` in their
+[content/](content/) module, which does two things:
+
+- a bar across the top says the page is unfinished and that square brackets are
+  placeholders
+- `noindex` keeps half-written copy out of search results, while `follow` still
+  lets crawlers reach the finished pages beyond it
+
+Publishing is one field per page — change `status` to `'published'` and both the
+bar and the `noindex` disappear. What each page still needs from the business is
+listed in the comment at the top of its content file.
+
+Anything genuinely unknown is bracketed rather than guessed: delivery coverage,
+lead times, refund policy, corporate pricing, phone number. `/faq` answers about
+how the product works are real, because that part is built.
 
 ### Affiliate
 

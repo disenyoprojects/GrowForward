@@ -122,6 +122,75 @@ export interface NavLink {
   readonly href: string
 }
 
+/**
+ * Whether a standing page is finished.
+ *
+ * A `draft` page still renders — the nav links to it, so hiding it would leave a
+ * dead link, which is worse than an honest unfinished page. Instead it carries a
+ * visible notice and is kept out of search results. Flipping the flag to
+ * `published` removes both. That is the only switch.
+ */
+export type PageStatus = 'draft' | 'published'
+
+export interface PageHero {
+  readonly eyebrow: string
+  readonly heading: string
+  readonly body: string
+}
+
+export interface PageSection {
+  readonly heading: string
+  readonly paragraphs: readonly string[]
+}
+
+export interface AboutContent {
+  readonly status: PageStatus
+  readonly hero: PageHero
+  readonly sections: readonly PageSection[]
+  readonly closing: string
+}
+
+export interface CorporateContent {
+  readonly status: PageStatus
+  readonly hero: PageHero
+  readonly offerings: readonly AffiliateBenefit[]
+  readonly sections: readonly PageSection[]
+  readonly cta: {
+    readonly heading: string
+    readonly body: string
+    readonly link: NavLink
+  }
+}
+
+/**
+ * One way to reach the business. `href` is `null` for a channel that has no
+ * link — an address or opening hours — so the page renders it as plain text
+ * rather than a link that goes nowhere.
+ */
+export interface ContactChannel {
+  readonly label: string
+  readonly value: string
+  readonly href: string | null
+}
+
+export interface ContactContent {
+  readonly status: PageStatus
+  readonly hero: PageHero
+  readonly channels: readonly ContactChannel[]
+  readonly responseNote: string
+}
+
+export interface FaqGroup {
+  readonly heading: string
+  readonly faqs: readonly Faq[]
+}
+
+export interface FaqContent {
+  readonly status: PageStatus
+  readonly hero: PageHero
+  readonly groups: readonly FaqGroup[]
+}
+
 export interface FooterColumn {
   readonly heading: string
   readonly links: readonly NavLink[]
