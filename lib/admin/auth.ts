@@ -1,6 +1,12 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
+import {
+  clearedState,
+  isLocked,
+  minutesRemaining,
+  registerFailure,
+} from './lockout'
 import { verifyPassword } from './password'
 import {
   type AdminSession,
@@ -21,29 +27,49 @@ import {
 const DUMMY_HASH =
   'scrypt$16384$8$1$00000000000000000000000000000000$' + '0'.repeat(128)
 
+export type LoginResult =
+  | { readonly status: 'ok'; readonly token: string }
+  | { readonly status: 'invalid' }
+  | { readonly status: 'locked'; readonly minutes: number }
+
 export async function login(
   email: string,
   password: string,
-): Promise<string | null> {
+): Promise<LoginResult> {
   const user = await db.adminUser.findUnique({
     where: { email: email.trim().toLowerCase() },
   })
 
   if (!user) {
     await verifyPassword(password, DUMMY_HASH)
-    return null
+    return { status: 'invalid' }
+  }
+
+  // Checked before the password, so a locked account cannot be probed by
+  // watching how long the answer takes.
+  if (isLocked(user.lockedUntil)) {
+    return { status: 'locked', minutes: minutesRemaining(user.lockedUntil) }
   }
 
   if (!(await verifyPassword(password, user.passwordHash))) {
-    return null
+    const next = registerFailure(user.failedAttempts)
+
+    await db.adminUser.update({ where: { id: user.id }, data: next })
+
+    return next.lockedUntil
+      ? { status: 'locked', minutes: minutesRemaining(next.lockedUntil) }
+      : { status: 'invalid' }
   }
 
   await db.adminUser.update({
     where: { id: user.id },
-    data: { lastLoginAt: new Date() },
+    data: { ...clearedState(), lastLoginAt: new Date() },
   })
 
-  return createSessionToken({ userId: user.id, role: user.role })
+  return {
+    status: 'ok',
+    token: createSessionToken({ userId: user.id, role: user.role }),
+  }
 }
 
 /** Writes the session cookie. `httpOnly` keeps it away from any script on the page. */

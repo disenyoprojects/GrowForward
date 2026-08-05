@@ -169,5 +169,11 @@ model AdminUser {
   lastLoginAt  DateTime?
   createdAt    DateTime  @default(now())
 
+  /// Wrong passwords in a row. Reset to zero on a successful sign-in.
+  failedAttempts Int @default(0)
+  /// Set once too many wrong passwords pile up; sign-in refuses until it passes.
+  /// Without this, someone could guess passwords as fast as the network allows.
+  lockedUntil DateTime?
+
   @@map("admin_users")
 }

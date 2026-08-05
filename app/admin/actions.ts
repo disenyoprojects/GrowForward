@@ -41,13 +41,24 @@ export async function signIn(
     return { error: 'Enter your email address and password.' }
   }
 
-  const token = await login(parsed.data.email, parsed.data.password)
+  const result = await login(parsed.data.email, parsed.data.password)
 
-  if (!token) {
+  // A locked account is told so plainly. It reveals that the address exists,
+  // which the generic message above deliberately avoids — but someone locked out
+  // of their own account needs to know why, and needs to know waiting fixes it.
+  if (result.status === 'locked') {
+    return {
+      error: `Too many failed attempts. Try again in ${result.minutes} ${
+        result.minutes === 1 ? 'minute' : 'minutes'
+      }.`,
+    }
+  }
+
+  if (result.status === 'invalid') {
     return { error: 'That email and password do not match an account.' }
   }
 
-  await setSessionCookie(token)
+  await setSessionCookie(result.token)
   redirect('/admin')
 }
 
