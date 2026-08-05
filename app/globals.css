@@ -461,23 +461,31 @@ nav {
 
 .gf-form fieldset {
   border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
 }
 
 .gf-form fieldset[disabled] {
   opacity: 0.6;
 }
 
+/* `display: block` opts the legend out of the browser's special legend layout,
+   which would otherwise sit it in the fieldset's border. It must NOT be floated:
+   a float is out of normal flow, so the field below it would be squeezed
+   sideways into whatever space the float left — which is nothing at full width. */
 .gf-form legend {
+  display: block;
+  width: 100%;
+  padding: 0;
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--bamboo);
   margin: 32px 0 18px;
-  float: left;
-  width: 100%;
 }
 
-.gf-form legend:first-of-type {
+.gf-form fieldset:first-of-type legend {
   margin-top: 0;
 }
 

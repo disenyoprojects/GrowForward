@@ -77,6 +77,9 @@ export function PersonalizeForm({
 
   return (
     <form className="gf-form" onSubmit={handleSubmit} noValidate>
+      {/* One fieldset per section. A fieldset may hold only one legend, so the
+          three sections cannot share one — and each group is what a screen
+          reader announces before reading its fields. */}
       <fieldset disabled={isSubmitting}>
         <legend>Your details</legend>
 
@@ -107,7 +110,9 @@ export function PersonalizeForm({
           onChange={update}
           hint="Optional. Used only if there is a delivery problem."
         />
+      </fieldset>
 
+      <fieldset disabled={isSubmitting}>
         <legend>The gift</legend>
 
         <Field
@@ -136,7 +141,9 @@ export function PersonalizeForm({
           maxLength={500}
           hint={`Printed on the gift card. ${500 - form.giftMessage.length} characters left.`}
         />
+      </fieldset>
 
+      <fieldset disabled={isSubmitting}>
         <legend>Delivery</legend>
 
         <Field
