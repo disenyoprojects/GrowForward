@@ -102,4 +102,17 @@ export const affiliate: AffiliateContent = {
     successBody:
       'We read every one. Expect to hear from us before the programme opens.',
   },
+
+  /**
+   * The invitation on the order confirmation page.
+   *
+   * Deliberately vague about money: the commission rates above are still
+   * unconfirmed, so this promises a programme, not a percentage. Once the rates
+   * are signed off this line can name one.
+   */
+  invite: {
+    heading: 'Know someone else who would love one?',
+    body: 'Share GrowForward with your people and earn on every basket they send.',
+    linkLabel: 'Become an affiliate',
+  },
 }

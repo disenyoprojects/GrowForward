@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PaymentPending } from '@/components/order/PaymentPending'
-import { getCollectionBySlug } from '@/lib/content'
+import { getAffiliate, getCollectionBySlug } from '@/lib/content'
 import { db } from '@/lib/db'
 import { formatPeso } from '@/lib/orders/identifiers'
 
@@ -29,6 +29,7 @@ export default async function OrderConfirmedPage({
 
   const collection = getCollectionBySlug(order.collectionSlug)
   const isPending = order.status === 'PENDING_PAYMENT'
+  const { invite } = getAffiliate()
 
   return (
     <section className="features">
@@ -75,6 +76,16 @@ export default async function OrderConfirmedPage({
             </p>
           )}
         </div>
+
+        {/* Only once the payment has landed. Someone still watching a pending
+            payment is being asked to trust us with money, not to sell for us. */}
+        {isPending ? null : (
+          <aside className="gf-affiliate-invite">
+            <p className="gf-affiliate-invite-lead">{invite.heading}</p>
+            <p>{invite.body}</p>
+            <Link href="/affiliate">{invite.linkLabel} →</Link>
+          </aside>
+        )}
 
         <p style={{ textAlign: 'center', marginTop: 40 }}>
           <Link href="/" className="btn btn-primary">

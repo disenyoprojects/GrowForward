@@ -48,6 +48,12 @@ export interface AffiliateContent {
     readonly successHeading: string
     readonly successBody: string
   }
+  /** Shown on the order confirmation page, once payment has landed. */
+  readonly invite: {
+    readonly heading: string
+    readonly body: string
+    readonly linkLabel: string
+  }
 }
 
 /**

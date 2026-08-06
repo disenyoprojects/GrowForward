@@ -750,6 +750,47 @@ nav {
   font-weight: 400;
 }
 
+/*
+ * Affiliate invitation under the order summary.
+ *
+ * Kept quiet on purpose — a hairline and a text link, no card and no button.
+ * The confirmation is what the customer came for; this must not read as a
+ * second call to action competing with it. Width matches the summary card.
+ */
+.gf-affiliate-invite {
+  max-width: 620px;
+  margin: 32px auto 0;
+  padding-top: 28px;
+  border-top: 1px dashed rgba(44, 59, 42, 0.18);
+  text-align: center;
+}
+
+.gf-affiliate-invite-lead {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  color: var(--forest);
+  margin-bottom: 6px;
+}
+
+.gf-affiliate-invite p {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.gf-affiliate-invite a {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--wood);
+  border-bottom: 1px solid rgba(138, 98, 68, 0.35);
+  padding-bottom: 2px;
+}
+
+.gf-affiliate-invite a:hover {
+  border-bottom-color: var(--wood);
+}
+
 .gf-gift-message {
   max-width: 520px;
   margin: 0 auto 32px;
