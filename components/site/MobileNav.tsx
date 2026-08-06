@@ -30,10 +30,18 @@ export function MobileNav({ links, cta }: MobileNavProps) {
   // Close after navigating. Links like `/#how-it-works` do not change the
   // pathname when you are already on that page, so the panel also closes on any
   // click inside it — otherwise the menu would stay open over the section it
-  // just jumped to.
-  useEffect(() => {
+  // just jumped to. This handles what a click cannot: the back button, which
+  // changes the route with the panel still open.
+  //
+  // Adjusted during render rather than in an effect. An effect would paint the
+  // open panel over the new page first and only then close it, which is a
+  // visible flash — and React's own guidance is to reset state this way.
+  const [renderedPath, setRenderedPath] = useState(pathname)
+
+  if (pathname !== renderedPath) {
+    setRenderedPath(pathname)
     setIsOpen(false)
-  }, [pathname])
+  }
 
   useEffect(() => {
     if (!isOpen) {
