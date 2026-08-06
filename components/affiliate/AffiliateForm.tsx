@@ -23,7 +23,9 @@ function SubmitButton() {
  *
  * This form posts to a server action rather than holding state, so the browser
  * keeps the values and a failed submit does not empty the boxes. Class names are
- * shared with `.gf-field` so both forms look the same.
+ * shared with `.gf-field` so both forms have the same shape — the form itself
+ * adds `gf-form--light`, because this page's band is off-white while the order
+ * form's is dark forest.
  */
 function Field({
   label,
@@ -98,7 +100,11 @@ export function AffiliateForm({ copy }: { copy: AffiliateContent['form'] }) {
   const errors = state.fieldErrors ?? {}
 
   return (
-    <form action={formAction} className="gf-form affiliate-form" noValidate>
+    <form
+      action={formAction}
+      className="gf-form gf-form--light affiliate-form"
+      noValidate
+    >
       <Field
         label="Your name"
         name="name"

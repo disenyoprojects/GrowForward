@@ -675,6 +675,54 @@ nav {
   transform: none;
 }
 
+/* Light variant. The defaults above are drawn for the dark forest background the
+   order form sits on — pale labels, near-white input text, a barely-there border.
+   On a linen or off-white band that reads as an empty page: the boxes disappear
+   and typed text is white on white. Add `gf-form--light` to any form on a light
+   band and the same markup gets ink-on-paper colors instead. */
+.gf-form--light .gf-field label {
+  color: var(--text-body);
+  font-weight: 500;
+}
+
+.gf-form--light .gf-optional {
+  color: var(--text-muted);
+}
+
+.gf-form--light .gf-field input,
+.gf-form--light .gf-field textarea {
+  color: var(--text-dark);
+  background: #fff;
+  border-color: rgba(44, 59, 42, 0.22);
+}
+
+.gf-form--light .gf-field input::placeholder,
+.gf-form--light .gf-field textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.gf-form--light .gf-field input:focus,
+.gf-form--light .gf-field textarea:focus {
+  border-color: var(--wood);
+  box-shadow: 0 0 0 3px rgba(199, 169, 123, 0.35);
+}
+
+/* The dark form's error salmon is near-invisible on linen. */
+.gf-form--light .gf-field input[aria-invalid='true'],
+.gf-form--light .gf-field textarea[aria-invalid='true'] {
+  border-color: #a34a2c;
+}
+
+.gf-form--light .gf-error,
+.gf-form--light .gf-form-error {
+  color: #a34a2c;
+}
+
+.gf-form--light .gf-hint {
+  color: var(--text-muted);
+}
+
 .gf-secure-note {
   font-size: 12px;
   color: var(--sage);
