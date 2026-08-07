@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '@/lib/db'
+import { notifyNewAffiliateApplication } from '@/lib/email/notify'
 import { affiliateApplicationSchema } from '@/lib/orders/schema'
 
 export interface AffiliateFormState {
@@ -54,6 +55,17 @@ export async function applyToAffiliate(
       error:
         'We could not save your application just now. Please try again in a moment.',
     }
+  }
+
+  // After the row is safely written, and deliberately not awaited into the
+  // result: the application is recorded either way, and a mail failure must not
+  // tell someone their application did not go through.
+  const notified = await notifyNewAffiliateApplication(parsed.data)
+
+  if (notified.status === 'failed') {
+    console.error(
+      `Affiliate application from ${parsed.data.email} was saved but nobody was told: ${notified.error}`,
+    )
   }
 
   return { status: 'success' }
