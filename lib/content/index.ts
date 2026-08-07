@@ -13,6 +13,7 @@ import { corporate } from '@/content/corporate'
 import { faqs } from '@/content/faqs'
 import { guides } from '@/content/guide'
 import { homepage } from '@/content/homepage'
+import { privacy, refunds, terms } from '@/content/policies'
 import { site } from '@/content/site'
 import type {
   AboutContent,
@@ -24,6 +25,7 @@ import type {
   FaqContent,
   HomepageContent,
   PageHero,
+  PolicyContent,
   SiteContent,
 } from './types'
 
@@ -81,6 +83,18 @@ export function getContact(): ContactContent {
 
 export function getFaqs(): FaqContent {
   return faqs
+}
+
+export function getPrivacy(): PolicyContent {
+  return privacy
+}
+
+export function getTerms(): PolicyContent {
+  return terms
+}
+
+export function getRefunds(): PolicyContent {
+  return refunds
 }
 
 export function getGuideByCollection(slug: string): CollectionGuide | null {

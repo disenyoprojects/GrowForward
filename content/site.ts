@@ -49,5 +49,13 @@ export const site: SiteContent = {
         },
       ],
     },
+    {
+      heading: 'Legal',
+      links: [
+        { label: 'Privacy', href: '/privacy' },
+        { label: 'Terms of service', href: '/terms' },
+        { label: 'Refunds and returns', href: '/refunds' },
+      ],
+    },
   ],
 }

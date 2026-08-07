@@ -199,6 +199,20 @@ export interface FaqContent {
   readonly groups: readonly FaqGroup[]
 }
 
+/**
+ * A standing legal page: privacy, terms, or refunds.
+ *
+ * `lastUpdated` is `null` until the business signs the wording off. A legal page
+ * carrying a confident date nobody approved is worse than one that admits it is
+ * unfinished, so the page renders the draft notice instead of a date.
+ */
+export interface PolicyContent {
+  readonly status: PageStatus
+  readonly hero: PageHero
+  readonly lastUpdated: string | null
+  readonly sections: readonly PageSection[]
+}
+
 export interface FooterColumn {
   readonly heading: string
   readonly links: readonly NavLink[]

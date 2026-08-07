@@ -1837,6 +1837,50 @@ footer a:hover {
   border-bottom-color: var(--wood);
 }
 
+/* Policy pages --------------------------------------------------------------- */
+
+/* Narrower than the rest of the site: legal prose is read line by line, and a
+   long measure is what makes these pages feel unreadable. */
+.policy-body {
+  max-width: 680px;
+}
+
+.policy-updated {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--earth-brown);
+  margin: 0 0 40px;
+}
+
+.policy-section {
+  margin-bottom: 44px;
+}
+
+.policy-section:last-child {
+  margin-bottom: 0;
+}
+
+.policy-section h2 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 16px;
+}
+
+.policy-section p {
+  color: var(--earth-brown);
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 300;
+  margin: 0 0 14px;
+}
+
+.policy-section p:last-child {
+  margin-bottom: 0;
+}
+
 /* FAQ ------------------------------------------------------------------------ */
 
 .faq-groups {
