@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { getCorporate, getHomepage, getSite } from '@/lib/content'
+import { getAffiliate, getCorporate, getHomepage, getSite } from '@/lib/content'
 
 /**
  * Every internal link on the site must have a page behind it.
@@ -66,6 +66,8 @@ function internalLinks(): readonly { label: string; href: string }[] {
   const site = getSite()
   const home = getHomepage()
 
+  const { invite } = getAffiliate()
+
   return [
     ...site.navLinks,
     site.navCta,
@@ -74,6 +76,10 @@ function internalLinks(): readonly { label: string; href: string }[] {
     home.hero.secondaryCta,
     home.ctaBand.cta,
     getCorporate().cta.link,
+    // Lives on the order confirmation page, which this test cannot reach — the
+    // page needs a real order. Checking the href it renders is the next best
+    // thing, and the reason the href sits in content at all.
+    { label: invite.linkLabel, href: invite.href },
   ].filter((link) => link.href.startsWith('/'))
 }
 

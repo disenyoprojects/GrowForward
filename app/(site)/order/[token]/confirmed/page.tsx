@@ -5,6 +5,7 @@ import { PaymentPending } from '@/components/order/PaymentPending'
 import { getAffiliate, getCollectionBySlug } from '@/lib/content'
 import { db } from '@/lib/db'
 import { formatPeso } from '@/lib/orders/identifiers'
+import { showsAffiliateInvite } from '@/lib/orders/status-display'
 
 export const dynamic = 'force-dynamic'
 
@@ -77,13 +78,13 @@ export default async function OrderConfirmedPage({
           )}
         </div>
 
-        {/* Only once the payment has landed. Someone still watching a pending
-            payment is being asked to trust us with money, not to sell for us. */}
-        {isPending ? null : (
-          <aside className="gf-affiliate-invite">
+        {showsAffiliateInvite(order.status) && (
+          <aside className="gf-affiliate-invite" aria-label={invite.heading}>
             <p className="gf-affiliate-invite-lead">{invite.heading}</p>
             <p>{invite.body}</p>
-            <Link href="/affiliate">{invite.linkLabel} →</Link>
+            <Link href={invite.href}>
+              {invite.linkLabel} <span aria-hidden="true">→</span>
+            </Link>
           </aside>
         )}
 

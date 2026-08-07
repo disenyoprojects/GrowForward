@@ -53,6 +53,8 @@ export interface AffiliateContent {
     readonly heading: string
     readonly body: string
     readonly linkLabel: string
+    /** Kept here rather than hard-coded so the route test can reach it. */
+    readonly href: string
   }
 }
 

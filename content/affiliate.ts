@@ -114,5 +114,6 @@ export const affiliate: AffiliateContent = {
     heading: 'Know someone else who would love one?',
     body: 'Share GrowForward with your people and earn on every basket they send.',
     linkLabel: 'Become an affiliate',
+    href: '/affiliate',
   },
 }
