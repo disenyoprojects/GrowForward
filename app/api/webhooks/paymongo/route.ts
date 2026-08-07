@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { markOrderPaid } from '@/lib/orders/payment'
+import { parseEvent, type PaymongoEvent } from '@/lib/paymongo/event'
 import { resolveMode, verifyWebhookSignature } from '@/lib/paymongo/signature'
 
 export const runtime = 'nodejs'
@@ -11,45 +12,6 @@ const PAID_EVENTS = new Set([
   'checkout_session.payment.paid',
   'payment.paid',
 ])
-
-interface PaymongoEvent {
-  readonly id: string
-  readonly type: string
-  readonly orderId?: string
-  readonly referenceNumber?: string
-  readonly paymentId?: string
-}
-
-/** Pulls the fields we need out of PayMongo's nested event envelope. */
-function parseEvent(payload: unknown): PaymongoEvent | null {
-  const data = (payload as { data?: Record<string, unknown> })?.data
-
-  if (!data || typeof data !== 'object') return null
-
-  const id = (data as { id?: unknown }).id
-  const attributes = (data as { attributes?: Record<string, unknown> })
-    .attributes
-  const type = attributes?.type
-
-  if (typeof id !== 'string' || typeof type !== 'string') return null
-
-  const resource = (attributes?.data ?? {}) as {
-    id?: unknown
-    attributes?: Record<string, unknown>
-  }
-  const resourceAttributes = resource.attributes ?? {}
-  const metadata = (resourceAttributes.metadata ?? {}) as Record<string, unknown>
-  const referenceNumber = resourceAttributes.reference_number
-
-  return {
-    id,
-    type,
-    orderId: typeof metadata.orderId === 'string' ? metadata.orderId : undefined,
-    referenceNumber:
-      typeof referenceNumber === 'string' ? referenceNumber : undefined,
-    paymentId: typeof resource.id === 'string' ? resource.id : undefined,
-  }
-}
 
 async function resolveOrderId(event: PaymongoEvent): Promise<string | null> {
   if (event.orderId) return event.orderId
