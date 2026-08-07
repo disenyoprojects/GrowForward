@@ -4,6 +4,16 @@ import type { MergeVars } from './render'
 
 const COMPANY_NAME = 'GrowForward'
 
+/**
+ * Shown on the gift card when the buyer left the message blank.
+ *
+ * The card is signed with the sender's name, so this has to read as a card
+ * sentiment rather than words put in their mouth — and it cannot be empty,
+ * because a missing merge tag renders as nothing and would leave the card
+ * signed by someone who apparently said nothing at all.
+ */
+const DEFAULT_GIFT_CARD_MESSAGE = 'Something living, chosen just for you.'
+
 function formatDate(date: Date | null): string | undefined {
   if (!date) return undefined
 
@@ -27,9 +37,11 @@ export function buildOrderMergeVars(order: Order, siteUrl: string): MergeVars {
     company_name: COMPANY_NAME,
     customer_name: order.buyerName,
     recipient_name: order.recipientName,
+    sender_name: order.senderName,
     order_number: order.orderNumber,
     collection_name: collection?.name ?? order.collectionSlug,
     gift_message: order.giftMessage ?? undefined,
+    gift_card_message: order.giftMessage ?? DEFAULT_GIFT_CARD_MESSAGE,
     delivery_address: order.deliveryAddress,
     delivery_date: formatDate(order.deliveredAt ?? order.deliveryDateWanted),
     estimated_ship_date: formatDate(order.deliveryDateWanted),

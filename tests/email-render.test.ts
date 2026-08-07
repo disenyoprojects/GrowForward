@@ -90,6 +90,7 @@ describe('compiled templates', () => {
     for (const name of [
       'order-confirmation',
       'payment-confirmation',
+      'gift-card',
       'preparing-order',
       'shipping',
       'delivered',

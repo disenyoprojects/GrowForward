@@ -4,6 +4,7 @@ import * as abandonedCart from './abandoned-cart'
 import * as affiliateInvitation from './affiliate-invitation'
 import * as corporateFollowup from './corporate-followup'
 import * as delivered from './delivered'
+import * as giftCard from './gift-card'
 import * as orderConfirmation from './order-confirmation'
 import * as paymentConfirmation from './payment-confirmation'
 import * as preparingOrder from './preparing-order'
@@ -23,6 +24,7 @@ export const templates = {
   "affiliate-invitation": affiliateInvitation,
   "corporate-followup": corporateFollowup,
   "delivered": delivered,
+  "gift-card": giftCard,
   "order-confirmation": orderConfirmation,
   "payment-confirmation": paymentConfirmation,
   "preparing-order": preparingOrder,
