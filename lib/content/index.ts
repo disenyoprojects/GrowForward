@@ -11,6 +11,7 @@ import { collections, collectionsIndex } from '@/content/collections'
 import { contact } from '@/content/contact'
 import { corporate } from '@/content/corporate'
 import { faqs } from '@/content/faqs'
+import { fulfilment } from '@/content/fulfilment'
 import { guides } from '@/content/guide'
 import { homepage } from '@/content/homepage'
 import { privacy, refunds, terms } from '@/content/policies'
@@ -23,6 +24,7 @@ import type {
   ContactContent,
   CorporateContent,
   FaqContent,
+  FulfilmentContent,
   HomepageContent,
   PageHero,
   PolicyContent,
@@ -83,6 +85,10 @@ export function getContact(): ContactContent {
 
 export function getFaqs(): FaqContent {
   return faqs
+}
+
+export function getFulfilment(): FulfilmentContent {
+  return fulfilment
 }
 
 export function getPrivacy(): PolicyContent {

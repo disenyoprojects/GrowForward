@@ -1,7 +1,8 @@
 import { db } from '@/lib/db'
-import { getCollectionBySlug } from '@/lib/content'
+import { getCollectionBySlug, getFulfilment } from '@/lib/content'
 import type { Order } from '@/lib/generated/prisma/client'
 import { createCheckoutSession } from '@/lib/paymongo/client'
+import { checkCapacity } from './capacity'
 import { formatOrderNumber, generateGuideToken } from './identifiers'
 import type { CreateOrderInput } from './schema'
 
@@ -40,6 +41,14 @@ export async function createOrderWithCheckout(
   const year = new Date().getFullYear()
 
   const order = await db.$transaction(async (tx) => {
+    // Inside the transaction so two simultaneous orders cannot both read the
+    // same count and both squeeze past the last free slot.
+    const capacity = await checkCapacity(input.quantity, tx)
+
+    if (!capacity.withinCapacity) {
+      throw new OrderCreationError(getFulfilment().atCapacityMessage)
+    }
+
     const placedThisYear = await tx.order.count({
       where: { createdAt: { gte: new Date(Date.UTC(year, 0, 1)) } },
     })

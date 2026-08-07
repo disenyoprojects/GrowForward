@@ -199,6 +199,17 @@ export interface FaqContent {
   readonly groups: readonly FaqGroup[]
 }
 
+export interface FulfilmentContent {
+  /**
+   * Baskets we can pack in a rolling week. `null` until the business confirms
+   * it, and null enforces no limit — never guess a number the growers have to
+   * live up to.
+   */
+  readonly weeklyBasketCapacity: number | null
+  /** Shown to a customer whose order would go over that limit. */
+  readonly atCapacityMessage: string
+}
+
 /**
  * A standing legal page: privacy, terms, or refunds.
  *
