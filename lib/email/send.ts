@@ -1,5 +1,7 @@
 import { Resend } from 'resend'
 import { db } from '@/lib/db'
+import { isTransactional } from './optout'
+import { hasOptedOut } from './optout-store'
 import { renderTemplate, type MergeVars } from './render'
 import type { TemplateName } from './templates'
 
@@ -47,6 +49,12 @@ export async function sendOrderEmail({
   to: string
   vars: MergeVars
 }): Promise<SendResult> {
+  // Checked before the log row is written, so a suppressed marketing send does
+  // not occupy the (orderId, template) slot that a later retry would need.
+  if (!isTransactional(template) && (await hasOptedOut(to))) {
+    return { status: 'skipped', reason: 'Recipient has unsubscribed.' }
+  }
+
   let logId: string
 
   try {

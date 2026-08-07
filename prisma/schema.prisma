@@ -177,3 +177,16 @@ model AdminUser {
 
   @@map("admin_users")
 }
+
+/// An email address that has asked to stop receiving marketing email.
+///
+/// Keyed by address rather than by order: someone who orders three times has
+/// opted out once, not three times. Order confirmations and receipts are sent
+/// regardless — see lib/email/optout.ts for why.
+model EmailOptOut {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("email_optouts")
+}

@@ -1,5 +1,6 @@
 import { getCollectionBySlug } from '@/lib/content'
 import type { Order } from '@/lib/generated/prisma/client'
+import { unsubscribeLink } from './optout'
 import type { MergeVars } from './render'
 
 const COMPANY_NAME = 'GrowForward'
@@ -57,7 +58,9 @@ export function buildOrderMergeVars(order: Order, siteUrl: string): MergeVars {
     about_link: `${base}/about`,
     consultation_link: `${base}/corporate`,
     affiliate_link: `${base}/affiliate`,
-    unsubscribe_link: `${base}/unsubscribe`,
+    // Signed and addressed to this buyer. A bare `/unsubscribe` would 404, and
+    // an unsigned one would let anyone unsubscribe anyone.
+    unsubscribe_link: unsubscribeLink(order.buyerEmail, base),
     instagram_link: 'https://instagram.com/growforward',
     facebook_link: 'https://facebook.com/growforward',
   }
